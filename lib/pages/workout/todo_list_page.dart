@@ -74,7 +74,7 @@ class _TodoListPageState extends State<TodoListPage> {
         child: Icon(Icons.add),
         onPressed: () {
           model.setCurrentTodo(null);
-          DBProvider.getDatabase();
+         // DBProvider.getDatabase();
           Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ExpandableListView()),

@@ -5,10 +5,12 @@ import 'package:flutter_todo/models/Group.dart';
 import 'package:flutter_todo/models/belongsIn.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
 
 class DBProvider{
-  static Database database;
 
+  static Database database = createDatabase();
+  
   static getDatabase(){
     if(database != null)
       return database;
@@ -20,8 +22,8 @@ class DBProvider{
   }
 
   static createDatabase() async{
-    var databasesPath = await getDatabasesPath();
-    String dbPath = join(databasesPath, 'demo.db');
+    var databasesPath = await getApplicationDocumentsDirectory();
+    String dbPath = join(databasesPath.path, 'demo1.db');
 
     var db = await openDatabase(dbPath, version: 1, onCreate: populateDb);
     return db;
@@ -34,17 +36,17 @@ class DBProvider{
 
 // Populate the badboy
   static void populateDb(Database database, int version) async {
-    await database.execute("CREATE TABLE Exercise ("
+    await database.execute("CREATE TABLE $Exercise ("
           "id TEXT PRIMARY KEY,"
           "name TEXT,"
           "type TEXT,"
           "pre TEXT,"
           "suf TEXT"
-          ")");
-    await database.execute("CREATE TABLE Group("
-          "name TEXT"
-          ")");
-    await database.execute("CREATE TABLE IsInGroup("
+          ");"
+    "CREATE TABLE Group ("
+          "name TEXT PRIMARY KEY"
+          ");"
+    "CREATE TABLE IsInGroup ("
           "id TEXT PRIMARY KEY,"
           "name TEXT PRIMARY KEY,"
           "id TEXT references Exercise(id),"
@@ -57,19 +59,22 @@ class DBProvider{
   static createExercise(Exercise exercise) async {
     final db = database;
       var result = await db.rawInsert(
-        "INSERT INTO Exercise (id,name,type,pre,suf)"
+        "INSERT INTO $Exercise (id,name,type,pre,suf)"
         " VALUES (${exercise.id},${exercise.name},${exercise.type},${exercise.pref},${exercise.suf})");
-      return result;
   }
 
   static createGroup(Group group) async{
-    var result = await database.rawInsert(
-      "INSERT INTO Group (name)"
+    final db = database;
+    await db.rawInsert(
+      "INSERT INTO $Group (name)"
       " VALUES (${group.name})");
   }
 
+   
+
   static belongsInGroup(BelongsIn belongsIn) async{
-    var result = await database.rawInsert(
+    final db = database;
+    var result = await db.rawInsert(
       "INSERT INTO IsInGroup (id,name)"
       " VALUES (${belongsIn.id},${belongsIn.name})");
   }

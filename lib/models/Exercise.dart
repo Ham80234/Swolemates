@@ -7,7 +7,6 @@ class Exercise {
   int type;
   int pref;
   int suf;
-  String userId;
 
   Exercise({
     @required this.id,
@@ -15,7 +14,6 @@ class Exercise {
     this.type,
     this.pref,
     this.suf,
-    this.userId,
   });
 
   factory Exercise.fromJson(Map<String, dynamic> json) => new Exercise(
@@ -33,4 +31,9 @@ class Exercise {
         "pref": pref,
         "suf": suf,
     };
+
+
+    get exercise{
+      return Exercise;
+    }
 }
