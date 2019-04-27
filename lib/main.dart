@@ -6,8 +6,8 @@ import 'package:flutter_todo/scoped_models/app_model.dart';
 import 'package:flutter_todo/pages/register/register_page.dart';
 import 'package:flutter_todo/pages/settings/settings_page.dart';
 import 'package:flutter_todo/pages/auth/auth_page.dart';
-import 'package:flutter_todo/pages/todo/todo_editor_page.dart';
-import 'package:flutter_todo/pages/todo/todo_list_page.dart';
+import 'package:flutter_todo/pages/workout/todo_editor_page.dart';
+import 'package:flutter_todo/pages/workout/todo_list_page.dart';
 
 import 'package:flutter_todo/.env.example.dart';
 
@@ -25,7 +25,7 @@ class TodoApp extends StatefulWidget {
 class _TodoAppState extends State<TodoApp> {
   AppModel _model;
   bool _isAuthenticated = false;
-  bool _isDarkThemeUsed = false;
+  bool _isDarkThemeUsed = true;
 
   @override
   void initState() {
@@ -58,7 +58,7 @@ class _TodoAppState extends State<TodoApp> {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           accentColor: Colors.blue,
-          brightness: _isDarkThemeUsed ? Brightness.dark : Brightness.light,
+          brightness: Brightness.dark, //_isDarkThemeUsed ? Brightness.dark : Brightness.light,
         ),
         routes: {
           '/': (BuildContext context) =>

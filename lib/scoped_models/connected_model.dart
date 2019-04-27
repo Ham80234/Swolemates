@@ -18,20 +18,20 @@ mixin CoreModel on Model {
   List<Todo> _todos = [];
   Todo _todo;
   bool _isLoading = false;
-  Filter _filter = Filter.All;
+  Filter _filter = Filter.Workout;
   User _user;
 }
 
 mixin TodosModel on CoreModel {
   List<Todo> get todos {
     switch (_filter) {
-      case Filter.All:
+      case Filter.Workout:
         return List.from(_todos);
 
-      case Filter.Done:
+      case Filter.Progress:
         return List.from(_todos.where((todo) => todo.isDone));
 
-      case Filter.NotDone:
+      case Filter.Goals:
         return List.from(_todos.where((todo) => !todo.isDone));
     }
 
@@ -443,7 +443,7 @@ mixin UserModel on CoreModel {
   void logout() async {
     _todos = [];
     _todo = null;
-    _filter = Filter.All;
+    _filter = Filter.Workout;
     _user = null;
 
     _authTimer.cancel();

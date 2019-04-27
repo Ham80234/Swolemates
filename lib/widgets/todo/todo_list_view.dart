@@ -13,25 +13,20 @@ class TodoListView extends StatelessWidget {
     String emptyText;
 
     switch (model.filter) {
-      case Filter.All:
-        emptyText = 'This is boring here. \r\nCreate a todo to make it crowd.';
+      case Filter.Workout:
+        emptyText = 'Press the + to add exercise';
         break;
 
-      case Filter.Done:
-        emptyText =
-            'This is boring here. \r\nCreate a Done todo to make it crowd.';
+      case Filter.Progress:
+        emptyText = 'Complete exercises to view progress!'
+            '';
         break;
 
-      case Filter.NotDone:
-        emptyText =
-            'This is boring here. \r\nCreate a Not Done todo to make it crowd.';
+      case Filter.Goals:
+        emptyText = 'The import feature is not available yet :('
+            '';
         break;
     }
-
-    Widget svg = new SvgPicture.asset(
-      'assets/todo_list.svg',
-      width: 200,
-    );
 
     return Container(
       color: Color.fromARGB(16, 0, 0, 0),
@@ -39,7 +34,6 @@ class TodoListView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          svg,
           SizedBox(
             height: 40.0,
           ),

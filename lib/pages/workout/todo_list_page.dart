@@ -9,6 +9,7 @@ import 'package:flutter_todo/widgets/helpers/confirm_dialog.dart';
 import 'package:flutter_todo/widgets/ui_elements/loading_modal.dart';
 import 'package:flutter_todo/widgets/todo/todo_list_view.dart';
 import 'package:flutter_todo/widgets/todo/shortcuts_enabled_todo_fab.dart';
+import 'package:flutter_todo/pages/workout/exerciselist.dart';
 
 class TodoListPage extends StatefulWidget {
   final AppModel model;
@@ -73,7 +74,10 @@ class _TodoListPageState extends State<TodoListPage> {
         onPressed: () {
           model.setCurrentTodo(null);
 
-          Navigator.pushNamed(context, '/editor');
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ExpandableListView()),
+            );
         },
       );
     }
@@ -86,20 +90,20 @@ class _TodoListPageState extends State<TodoListPage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Icon(
-              Icons.all_inclusive,
-              color: model.filter == Filter.All ? Colors.white : Colors.black,
+              Icons.fitness_center,
+              color: model.filter == Filter.Workout ? Colors.white : Colors.black,
             ),
             Text(
-              'All',
+              'Workout',
               style: TextStyle(
-                color: model.filter == Filter.All ? Colors.white : Colors.black,
+                color: model.filter == Filter.Workout ? Colors.white : Colors.black,
               ),
             )
           ],
         ),
       ),
       onPressed: () {
-        model.applyFilter(Filter.All);
+        model.applyFilter(Filter.Workout);
       },
     );
   }
@@ -111,21 +115,21 @@ class _TodoListPageState extends State<TodoListPage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Icon(
-              Icons.check,
-              color: model.filter == Filter.Done ? Colors.white : Colors.black,
+              Icons.show_chart,
+              color: model.filter == Filter.Progress ? Colors.white : Colors.black,
             ),
             Text(
-              'Done',
+              'Progress',
               style: TextStyle(
                 color:
-                    model.filter == Filter.Done ? Colors.white : Colors.black,
+                    model.filter == Filter.Progress ? Colors.white : Colors.black,
               ),
             )
           ],
         ),
       ),
       onPressed: () {
-        model.applyFilter(Filter.Done);
+        model.applyFilter(Filter.Progress);
       },
     );
   }
@@ -137,14 +141,14 @@ class _TodoListPageState extends State<TodoListPage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Icon(
-              Icons.check_box_outline_blank,
+              Icons.file_download,
               color:
-                  model.filter == Filter.NotDone ? Colors.white : Colors.black,
+                  model.filter == Filter.Goals ? Colors.white : Colors.black,
             ),
             Text(
-              'Not Done',
+              'Import',
               style: TextStyle(
-                color: model.filter == Filter.NotDone
+                color: model.filter == Filter.Goals
                     ? Colors.white
                     : Colors.black,
               ),
@@ -153,7 +157,7 @@ class _TodoListPageState extends State<TodoListPage> {
         ),
       ),
       onPressed: () {
-        model.applyFilter(Filter.NotDone);
+        model.applyFilter(Filter.Goals);
       },
     );
   }
