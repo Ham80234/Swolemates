@@ -41,51 +41,70 @@ class _ProfilePageState extends State < ProfilePage > {
         ),
       ],
     );
+    
+  }
+  Widget _buildUser() {
+    return UserAccountsDrawerHeader(
+            accountName: new Text("Andrew Hamlett"),
+            accountEmail: new Text("Ham80234@gmail.com"),
+            currentAccountPicture: CircleAvatar(
+
+              backgroundImage: NetworkImage('https://scontent-msp1-1.xx.fbcdn.net/v/t1.0-9/27540478_1997816626898586_1480459046183815724_n.jpg?_nc_cat=107&_nc_ht=scontent-msp1-1.xx&oh=6a9de26b68fadd05c329faba70a1dbda&oe=5D703F5F'),
+            ),
+            decoration: new BoxDecoration(
+              image: new DecorationImage(
+                fit: BoxFit.cover,
+                image: new NetworkImage('https://d2r55xnwy6nx47.cloudfront.net/uploads/2018/11/UniversalCoverings_2880x1220.gif')
+              )
+            ));
+  
+  }
+    Widget _buildguage() {
+    return   new Card(
+          child: Container(
+       child:  GaugeChart.withSampleData(),
+       width: 150.0,
+       height: 250.0,
+            )
+          );
+  
+  }
+    Widget _buildBasicInfo() {
+    return Center(
+  child: Card(
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        const ListTile(
+          leading: Icon(Icons.person),
+          title: Text('Stats: '),
+          subtitle: Text('Weight: 200 lbs, Height: 5\' 10'),
+        ),
+       
+      ],
+    ),
+  ),
+);
+  }
+   Widget _buildChart() {
+    return   new Card(
+          child: Container(
+       child:  SimpleBarChart.withSampleData(),
+       width: 150.0,
+       height: 250.0,
+            )
+          );
+  
   }
   Widget _buildPageContent(AppModel model) {
     return Scaffold(
       appBar: _buildAppBar(context, model),
       body: ListView(
         children: < Widget > [
-          UserAccountsDrawerHeader(
-            currentAccountPicture: CircleAvatar(
-              backgroundImage: NetworkImage('https://i.kinja-img.com/gawker-media/image/upload/s--Tg_qqR3r--/c_scale,f_auto,fl_progressive,q_80,w_800/dnmtn4ksijwyep0xmljk.jpg'),
-            ),
-            decoration: new BoxDecoration(
-              image: new DecorationImage(
-                fit: BoxFit.cover,
-                image: new NetworkImage('https://t3.ftcdn.net/jpg/01/78/34/70/500_F_178347098_eyLewi5tGf2OheQfrLzku0fc2vT0rzsL.jpgr')
-              )
-            )),
-          Center(
-            child: Card(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: < Widget > [
-                  const ListTile(
-                      leading: Icon(Icons.person),
-                      title: Text('John Smith'),
-                      subtitle: Text('JohnSmith@gmail.com'),
-                    ),
-                    ButtonTheme.bar( // make buttons use the appropriate styles for cards
-                      child: ButtonBar(
-                        children: < Widget > [
-                          new Text("Weight: 168 lbs"),
-                          new Text("Height: 5' 10")
-                        ],
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ),
-          new Card(
-          child: Container(
-       child:  DonutAutoLabelChart.withSampleData(),
-       width: 150.0,
-       height: 250.0,
-            )
-          )
+          _buildUser(),
+          _buildguage(),
+          _buildBasicInfo(),
+          _buildChart()
         ],
       ),
     );
@@ -105,17 +124,15 @@ class _ProfilePageState extends State < ProfilePage > {
 
 
 /// Bar chart example
-
-
-class DonutAutoLabelChart extends StatelessWidget {
+class GaugeChart extends StatelessWidget {
   final List<charts.Series> seriesList;
   final bool animate;
-
-  DonutAutoLabelChart(this.seriesList, {this.animate});
+  final double pi = 3.1415;
+  GaugeChart(this.seriesList, {this.animate});
 
   /// Creates a [PieChart] with sample data and no transition.
-  factory DonutAutoLabelChart.withSampleData() {
-    return new DonutAutoLabelChart(
+  factory GaugeChart.withSampleData() {
+    return new GaugeChart(
       _createSampleData(),
       // Disable animations for image tests.
       animate: false,
@@ -127,52 +144,91 @@ class DonutAutoLabelChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return new charts.PieChart(seriesList,
         animate: animate,
-        // Configure the width of the pie slices to 60px. The remaining space in
-        // the chart will be left as a hole in the center.
-        //
-        // [ArcLabelDecorator] will automatically position the label inside the
-        // arc if the label will fit. If the label will not fit, it will draw
-        // outside of the arc with a leader line. Labels can always display
-        // inside or outside using [LabelPosition].
-        //
-        // Text style for inside / outside can be controlled independently by
-        // setting [insideLabelStyleSpec] and [outsideLabelStyleSpec].
-        //
-        // Example configuring different styles for inside/outside:
-        //       new charts.ArcLabelDecorator(
-        //          insideLabelStyleSpec: new charts.TextStyleSpec(...),
-        //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
+        // Configure the width of the pie slices to 30px. The remaining space in
+        // the chart will be left as a hole in the center. Adjust the start
+        // angle and the arc length of the pie so it resembles a gauge.
         defaultRenderer: new charts.ArcRendererConfig(
-            arcWidth: 60,
-            arcRendererDecorators: [new charts.ArcLabelDecorator()]));
+            arcWidth: 30, startAngle: 4 / 5 * pi, arcLength: 7 / 5 * pi));
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
+  static List<charts.Series<GaugeSegment, String>> _createSampleData() {
     final data = [
-      new LinearSales(0, 100),
-      new LinearSales(1, 75),
-      new LinearSales(2, 25),
-      new LinearSales(3, 5),
+      new GaugeSegment('Low', 75),
+      new GaugeSegment('Acceptable', 100),
+      new GaugeSegment('High', 50),
+      new GaugeSegment('Highly Unusual', 5),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
-        id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.goal,
-        measureFn: (LinearSales sales, _) => sales.progress,
+      new charts.Series<GaugeSegment, String>(
+        id: 'Segments',
+        domainFn: (GaugeSegment segment, _) => segment.segment,
+        measureFn: (GaugeSegment segment, _) => segment.size,
         data: data,
-        // Set a label accessor to control the text of the arc label.
-        labelAccessorFn: (LinearSales row, _) => '${row.goal}: ${row.progress}',
       )
     ];
   }
 }
 
-/// Sample linear data type.
-class LinearSales {
-  final int goal;
-  final int progress;
+/// Sample data type.
+class GaugeSegment {
+  final String segment;
+  final int size;
 
-  LinearSales(this.goal, this.progress);
+  GaugeSegment(this.segment, this.size);
+}
+
+
+class SimpleBarChart extends StatelessWidget {
+  final List<charts.Series> seriesList;
+  final bool animate;
+
+  SimpleBarChart(this.seriesList, {this.animate});
+
+  /// Creates a [BarChart] with sample data and no transition.
+  factory SimpleBarChart.withSampleData() {
+    return new SimpleBarChart(
+      _createSampleData(),
+      // Disable animations for image tests.
+      animate: false,
+    );
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return new charts.BarChart(
+      seriesList,
+      animate: animate,
+    );
+  }
+
+  /// Create one series with sample hard coded data.
+  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+    final data = [
+      new OrdinalSales('2014', 5),
+      new OrdinalSales('2015', 25),
+      new OrdinalSales('2016', 100),
+      new OrdinalSales('2017', 75),
+    ];
+
+    return [
+      new charts.Series<OrdinalSales, String>(
+        id: 'Sales',
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (OrdinalSales sales, _) => sales.year,
+        measureFn: (OrdinalSales sales, _) => sales.sales,
+        data: data,
+      )
+    ];
+  }
+}
+
+/// Sample ordinal data type.
+class OrdinalSales {
+  final String year;
+  final int sales;
+
+  OrdinalSales(this.year, this.sales);
 }
