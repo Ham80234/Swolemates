@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/database/databasehandler.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 
@@ -73,7 +74,7 @@ class _TodoListPageState extends State<TodoListPage> {
         child: Icon(Icons.add),
         onPressed: () {
           model.setCurrentTodo(null);
-
+          DBProvider.getDatabase();
           Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ExpandableListView()),

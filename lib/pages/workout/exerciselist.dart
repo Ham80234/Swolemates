@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 
 import 'package:flutter_todo/.env.example.dart';
+import 'package:flutter_todo/database/databasehandler.dart';
 import 'package:flutter_todo/models/todo.dart';
 import 'package:flutter_todo/models/priority.dart';
 import 'package:flutter_todo/pages/workout/exerciseinfo.dart';
@@ -26,7 +27,7 @@ class ExpandableListView extends StatelessWidget {
     "Laravel Dev!",
     "Angular Dev!",
   ];
-  static final List<Exercise> chestExercises = [
+  static final List<Exercise> cchestExercises = [
       new Exercise(id: 0001.toString(), name:"Barbell bench press", type:0, pref:0, suf:0),
       new Exercise(id: 0002.toString(), name:"Incline barbell bench press", type:0, pref:0, suf:0),
       new Exercise(id: 0003.toString(), name:"Decline barbell bench press", type:1, pref:0, suf:0),
@@ -45,6 +46,7 @@ class ExpandableListView extends StatelessWidget {
       new Exercise(id: 0016.toString(), name:"Dips", type:1, pref:0, suf:0),
       new Exercise(id: 0017.toString(), name:"Machine press", type:1, pref:0, suf:0),
   ];
+  static final List<Exercise> chestExercises = DBProvider.getAllExercisesPerGroup("Chest");
   static final List<Exercise> backExercises = [
       new Exercise(id: 0101.toString(), name:"Pullup", type:0, pref:0, suf:0),
       new Exercise(id: 0102.toString(), name:"Chinup", type:0, pref:0, suf:0),
