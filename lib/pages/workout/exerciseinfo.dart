@@ -12,7 +12,7 @@ import 'package:flutter_todo/widgets/ui_elements/loading_modal.dart';
 import 'package:flutter_todo/widgets/form_fields/priority_form_field.dart';
 import 'package:flutter_todo/widgets/form_fields/toggle_form_field.dart';
 
-class ExerciseInfo extends StatefulWidget {
+class ExerciseInfo extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
     return _ExerciseInfoState();

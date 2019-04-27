@@ -90,6 +90,35 @@ class ExpandableListView extends StatelessWidget {
                       title: Text(data.name),
                       onTap: (){
                         navigateAccordingly(data.id);
+
+                         Card c = new Card(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const ListTile(
+                leading: Icon(Icons.album),
+                title: Text('The Enchanted Nightingale'),
+                subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
+              ),
+              ButtonTheme.bar( // make buttons use the appropriate styles for cards
+                child: ButtonBar(
+                  children: <Widget>[
+                    FlatButton(
+                      child: const Text('BUY TICKETS'),
+                      onPressed: () { /* ... */ },
+                    ),
+                    FlatButton(
+                      child: const Text('LISTEN'),
+                      onPressed: () { /* ... */ },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+                         
+          
                       }
                     ))
                 .toList(),
@@ -128,6 +157,10 @@ class ExpandableListView extends StatelessWidget {
 
   static void navigateAccordingly(String title){
     print("navigate" + title);
+
+    
+
+    
   }
 
 }
