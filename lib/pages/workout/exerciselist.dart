@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
 
 
-import 'package:flutter_todo/.env.example.dart';
 import 'package:flutter_todo/database/databasehandler.dart';
 import 'package:flutter_todo/database/listhandler.dart';
-import 'package:flutter_todo/models/todo.dart';
-import 'package:flutter_todo/models/priority.dart';
-import 'package:flutter_todo/pages/workout/exerciseinfo.dart';
-import 'package:flutter_todo/scoped_models/app_model.dart';
-import 'package:flutter_todo/widgets/helpers/message_dialog.dart';
-import 'package:flutter_todo/widgets/helpers/confirm_dialog.dart';
-import 'package:flutter_todo/widgets/ui_elements/loading_modal.dart';
-import 'package:flutter_todo/widgets/form_fields/priority_form_field.dart';
-import 'package:flutter_todo/widgets/form_fields/toggle_form_field.dart';
 import 'package:flutter_todo/models/Exercise.dart';
 import 'package:flutter/material.dart';
 
@@ -43,6 +33,7 @@ class ExpandableListView extends StatelessWidget {
   static List<Exercise> cardioExercises = ListHandler.getCardioExercises();
   static List<Exercise> fullbodyExercises = ListHandler.getFBExercises();
   static List<Exercise> otherExercises = ListHandler.getOtherExercises();
+  
   static final List<String> groups = [
     "Chest",
     "Back",
@@ -78,7 +69,10 @@ class ExpandableListView extends StatelessWidget {
       otherExercises, //15
   ];
 
-  List<ExpansionTile> _listOfExpansions = List<ExpansionTile>.generate(
+
+  @override
+  Widget build(BuildContext context) {
+    List<ExpansionTile> _listOfExpansions = List<ExpansionTile>.generate(
 
       15,
       (i) => ExpansionTile(
@@ -89,43 +83,15 @@ class ExpandableListView extends StatelessWidget {
                       leading: Text(data.id.toString()),
                       title: Text(data.name),
                       onTap: (){
-                        navigateAccordingly(data.id);
-
-                         Card c = new Card(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const ListTile(
-                leading: Icon(Icons.album),
-                title: Text('The Enchanted Nightingale'),
-                subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
-              ),
-              ButtonTheme.bar( // make buttons use the appropriate styles for cards
-                child: ButtonBar(
-                  children: <Widget>[
-                    FlatButton(
-                      child: const Text('BUY TICKETS'),
-                      onPressed: () { /* ... */ },
-                    ),
-                    FlatButton(
-                      child: const Text('LISTEN'),
-                      onPressed: () { /* ... */ },
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-                         
-          
+                        print("Navigate");
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _buildAboutDialog(context, data),);     
                       }
                     ))
                 .toList(),
           ));
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Exercises'),
@@ -138,22 +104,6 @@ class ExpandableListView extends StatelessWidget {
     );
   }
 
-  Widget _buildPageContent(AppModel model) {
-    return Scaffold(
-     // appBar: _buildAppBar(model),
-      body: Container(
-        padding: EdgeInsets.all(10.0),
-        child: Center(
-        ),
-      ),
-    );
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return null;
-  }
 
   static void navigateAccordingly(String title){
     print("navigate" + title);
@@ -161,6 +111,56 @@ class ExpandableListView extends StatelessWidget {
     
 
     
+  }
+
+Widget _buildAboutDialog(BuildContext context, Exercise exercise) {
+    String exerciseName = exercise.name;
+    return new AlertDialog(
+      
+      title: Text(exerciseName),
+      content: new Column(
+       mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Text("Weight:"),
+          new TextField(
+            maxLines: 1,
+            cursorColor: Colors.white,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: 'Please enter the weight'
+            ),
+          ),
+          new Text("x"),
+          new Text(""),
+          new Text("Sets:"),
+          new TextField(
+            maxLines: 1,
+            cursorColor: Colors.white,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: 'Please enter the reps'
+            ),
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        new FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          textColor: Theme.of(context).accentColor,
+          child: const Text('Close'),
+        ),
+        new FlatButton(
+          onPressed: () {
+            //Navigator.of(context).pop();
+          },
+          textColor: Theme.of(context).accentColor,
+          child: const Text('Add Set'),
+        ),
+      ],
+    );
   }
 
 }
