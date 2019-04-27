@@ -5,6 +5,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_todo/scoped_models/app_model.dart';
 import 'package:flutter_todo/pages/register/register_page.dart';
 import 'package:flutter_todo/pages/settings/settings_page.dart';
+import 'package:flutter_todo/pages/profile/profile_page.dart';
 import 'package:flutter_todo/pages/auth/auth_page.dart';
 import 'package:flutter_todo/pages/workout/todo_editor_page.dart';
 import 'package:flutter_todo/pages/workout/todo_list_page.dart';
@@ -69,6 +70,8 @@ class _TodoAppState extends State<TodoApp> {
               _isAuthenticated ? TodoListPage(_model) : RegisterPage(),
           '/settings': (BuildContext context) =>
               _isAuthenticated ? SettingsPage(_model) : AuthPage(),
+          '/profile': (BuildContext context) =>
+              _isAuthenticated ? ProfilePage(_model) : AuthPage(),
         },
         onUnknownRoute: (RouteSettings settings) {
           return MaterialPageRoute(

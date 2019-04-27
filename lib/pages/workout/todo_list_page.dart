@@ -52,12 +52,20 @@ class _TodoListPageState extends State<TodoListPage> {
               case 'Settings':
                 Navigator.pushNamed(context, '/settings');
             }
+            switch (choice) {
+              case 'Profile':
+                Navigator.pushNamed(context, '/profile');
+            }
           },
           itemBuilder: (BuildContext context) {
             return [
               PopupMenuItem<String>(
                 value: 'Settings',
                 child: Text('Settings'),
+              ),
+               PopupMenuItem<String>(
+                value: 'Profile',
+                child: Text('Profile'),
               )
             ];
           },
