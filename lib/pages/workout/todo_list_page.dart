@@ -41,7 +41,7 @@ class _TodoListPageState extends State<TodoListPage> {
           onPressed: () async {
             bool confirm = await ConfirmDialog.show(context);
 
-            if (confirm) {
+            if (confirm == true) {
               model.logout();
             }
           },
