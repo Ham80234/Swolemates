@@ -67,16 +67,115 @@ class TodoListView extends StatelessWidget {
     );
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return ScopedModelDescendant<AppModel>(
+  //     builder: (BuildContext context, Widget child, AppModel model) {
+  //       Widget todoCards = model.todos.length > 0
+  //           ? _buildListView(model)
+  //           : _buildEmptyText(model);
+
+  //       return todoCards;
+  //     },
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<AppModel>(
-      builder: (BuildContext context, Widget child, AppModel model) {
-        Widget todoCards = model.todos.length > 0
-            ? _buildListView(model)
-            : _buildEmptyText(model);
-
-        return todoCards;
-      },
+    return ListView(
+      children: <Widget>[
+        ListTile(
+          title: Text('Horse'),
+          subtitle: Text('A strong animal'),
+          trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            print('horse');
+          },
+          selected: true,
+        ),
+        ListTile(
+          title: Text('Cow'),
+          subtitle: Text('Provider of milk'),
+          trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            print('cow');
+          },
+        ),
+        ListTile(
+          title: Text('Camel'),
+          subtitle: Text('Comes with humps'),
+          trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            print('camel');
+          },
+          enabled: false,
+        ),
+        ListTile(
+          title: Text('Sheep'),
+          subtitle: Text('Provides wool'),
+          trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            print('sheep');
+          },
+        ),
+        ListTile(
+          title: Text('Goat'),
+          subtitle: Text('Some have horns'),
+          trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            print('goat');
+          },
+        ),
+      ],
     );
   }
 }
+
+/*Widget build(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        ListTile(
+          title: Text('Horse'),
+          subtitle: Text('A strong animal'),
+          trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            print('horse');
+          },
+          selected: true,
+        ),
+        ListTile(
+          title: Text('Cow'),
+          subtitle: Text('Provider of milk'),
+          trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            print('cow');
+          },
+        ),
+        ListTile(
+          title: Text('Camel'),
+          subtitle: Text('Comes with humps'),
+          trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            print('camel');
+          },
+          enabled: false,
+        ),
+        ListTile(
+          title: Text('Sheep'),
+          subtitle: Text('Provides wool'),
+          trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            print('sheep');
+          },
+        ),
+        ListTile(
+          title: Text('Goat'),
+          subtitle: Text('Some have horns'),
+          trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            print('goat');
+          },
+        ),
+      ],
+    );
+  }
+*/

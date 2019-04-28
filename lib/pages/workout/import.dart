@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/database/databasehandler.dart';
+import 'package:flutter_todo/widgets/todo/alternative_view.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 
@@ -8,22 +9,21 @@ import 'package:flutter_todo/models/filter.dart';
 import 'package:flutter_todo/scoped_models/app_model.dart';
 import 'package:flutter_todo/widgets/helpers/confirm_dialog.dart';
 import 'package:flutter_todo/widgets/ui_elements/loading_modal.dart';
-import 'package:flutter_todo/widgets/todo/todo_list_view.dart';
 import 'package:flutter_todo/widgets/todo/shortcuts_enabled_todo_fab.dart';
 import 'package:flutter_todo/pages/workout/exerciselist.dart';
 
-class TodoListPage extends StatefulWidget {
+class ImportPage extends StatefulWidget {
   final AppModel model;
 
-  TodoListPage(this.model);
+  ImportPage(this.model);
 
   @override
   State<StatefulWidget> createState() {
-    return _TodoListPageState();
+    return _ImportPageState();
   }
 }
 
-class _TodoListPageState extends State<TodoListPage> {
+class _ImportPageState extends State<ImportPage> {
   @override
   void initState() {
     widget.model.fetchTodos();
@@ -34,7 +34,6 @@ class _TodoListPageState extends State<TodoListPage> {
   Widget _buildAppBar(AppModel model) {
     return AppBar(
       title: Text(Configure.AppName),
-      backgroundColor: Colors.blue,
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.lock),
@@ -113,6 +112,7 @@ class _TodoListPageState extends State<TodoListPage> {
       ),
       onPressed: () {
         model.applyFilter(Filter.Workout);
+        Navigator.pushNamed(context, '/');
       },
     );
   }
@@ -139,6 +139,7 @@ class _TodoListPageState extends State<TodoListPage> {
       ),
       onPressed: () {
         model.applyFilter(Filter.Progress);
+        Navigator.pushNamed(context, '/goals');
       },
     );
   }
@@ -197,7 +198,7 @@ class _TodoListPageState extends State<TodoListPage> {
       // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: _buildFloatingActionButton(model),
       bottomNavigationBar: _buildBottomAppBar(model),
-      body: TodoListView(),
+      body: AlternativeView(),
     );
   }
 

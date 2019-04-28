@@ -133,7 +133,7 @@ Widget _buildAboutDialog(BuildContext context, Exercise exercise) {
           ),
           new Text("x"),
           new Text(""),
-          new Text("Sets:"),
+          new Text("Reps:"),
           new TextField(
             maxLines: 1,
             cursorColor: Colors.white,
@@ -155,6 +155,7 @@ Widget _buildAboutDialog(BuildContext context, Exercise exercise) {
         new FlatButton(
           onPressed: () {
             //Navigator.of(context).pop();
+            _showDialog(context);
           },
           textColor: Theme.of(context).accentColor,
           child: const Text('Add Set'),
@@ -162,6 +163,27 @@ Widget _buildAboutDialog(BuildContext context, Exercise exercise) {
       ],
     );
   }
-
+  void _showDialog(BuildContext context) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text(""),
+          content: new Text("Set has been added successfully!"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 

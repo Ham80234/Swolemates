@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/pages/workout/goals.dart';
+import 'package:flutter_todo/pages/workout/import.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 
@@ -8,7 +10,7 @@ import 'package:flutter_todo/pages/settings/settings_page.dart';
 import 'package:flutter_todo/pages/profile/profile_page.dart';
 import 'package:flutter_todo/pages/auth/auth_page.dart';
 import 'package:flutter_todo/pages/workout/todo_editor_page.dart';
-import 'package:flutter_todo/pages/workout/todo_list_page.dart';
+import 'package:flutter_todo/pages/workout/workout.dart';
 
 import 'package:flutter_todo/.env.example.dart';
 
@@ -63,20 +65,24 @@ class _TodoAppState extends State<TodoApp> {
         ),
         routes: {
           '/': (BuildContext context) =>
-              _isAuthenticated ? TodoListPage(_model) : AuthPage(),
+              _isAuthenticated ? WorkoutPage(_model) : AuthPage(),
           '/editor': (BuildContext context) =>
               _isAuthenticated ? TodoEditorPage() : AuthPage(),
           '/register': (BuildContext context) =>
-              _isAuthenticated ? TodoListPage(_model) : RegisterPage(),
+              _isAuthenticated ? WorkoutPage(_model) : RegisterPage(),
           '/settings': (BuildContext context) =>
               _isAuthenticated ? SettingsPage(_model) : AuthPage(),
           '/profile': (BuildContext context) =>
               _isAuthenticated ? ProfilePage(_model) : AuthPage(),
+          '/goals' : (BuildContext context) =>
+              _isAuthenticated ? GoalsPage(_model) : AuthPage(),
+          '/import' : (BuildContext context) =>
+              _isAuthenticated ? ImportPage(_model) : AuthPage(),
         },
         onUnknownRoute: (RouteSettings settings) {
           return MaterialPageRoute(
             builder: (BuildContext context) =>
-                _isAuthenticated ? TodoListPage(_model) : AuthPage(),
+                _isAuthenticated ? WorkoutPage(_model) : AuthPage(),
           );
         },
       ),
