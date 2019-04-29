@@ -8,17 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo/widgets/todo/todo_list_view.dart';
 
 class ExpandableListView extends StatelessWidget {
-  static final List<String> _listViewData = [
-    "Inducesmile.com",
-    "Flutter Dev",
-    "Android Dev",
-    "iOS Dev!",
-    "React Native Dev!",
-    "React Dev!",
-    "express Dev!",
-    "Laravel Dev!",
-    "Angular Dev!",
-  ];
   static List<Exercise> chestExercises = ListHandler.getChestExercises();
   static List<Exercise> backExercises = ListHandler.getBackExercises();
   static List<Exercise> shoulderExercises = ListHandler.getShoulderExercises();
@@ -183,7 +172,7 @@ Widget _buildAboutDialog(BuildContext context, Exercise exercise) {
             new FlatButton(
               child: new Text("Close"),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
               },
             ),
           ],

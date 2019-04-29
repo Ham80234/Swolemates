@@ -82,6 +82,7 @@ class TodoListView extends StatelessWidget {
   // }
 
   static List<ListTile> exercises = new List<ListTile>();
+  static int count = 0;
   static void addNewExercise(Exercise exercise, String weight, String reps){
     ListTile temp = new ListTile(
       title: Text(exercise.name),
@@ -89,11 +90,108 @@ class TodoListView extends StatelessWidget {
       trailing: Icon(Icons.edit),
       onTap: (){
         print('edit options');
+        //  showDialog(
+        //    context: context,
+        //    builder: (BuildContext context) => _editExercise(context, exercise, weight, reps),);  
       }
     );
     exercises.add(temp);
+    count++;
   }
+  static void deleteExercise(BuildContext context, Exercise exercise){
+    for(int i=0; i<exercises.length; i++){
+      ListTile temp = exercises.elementAt(i);
 
+    }
+
+  }
+  static TextEditingController weightController = new TextEditingController();
+  static TextEditingController repsController = new TextEditingController();
+
+  static Widget _editExercise(BuildContext context, Exercise exercise, String weight, String reps) {
+    String exerciseName = exercise.name;
+    return new AlertDialog(
+      
+      title: Text(exerciseName),
+      content: new Column(
+       mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Text("Weight:"),
+          new TextField(
+            controller: weightController,
+            maxLines: 1,
+            cursorColor: Colors.white,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: weight
+            ),
+          ),
+          new Text("x"),
+          new Text(""),
+          new Text("Reps:"),
+          new TextField(
+            controller: repsController,
+            maxLines: 1,
+            cursorColor: Colors.white,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: reps
+            ),
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        new FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          textColor: Theme.of(context).accentColor,
+          child: const Text('Close'),
+        ),
+        new FlatButton(
+          onPressed: () {
+            //Navigator.of(context).pop();
+            _showDialog(context);
+            TodoListView.addNewExercise(exercise, weightController.text, repsController.text);
+          },
+          textColor: Theme.of(context).accentColor,
+          child: const Text('Delete Set'),
+        ),
+        new FlatButton(
+          onPressed: () {
+            //Navigator.of(context).pop();
+            _showDialog(context);
+            TodoListView.addNewExercise(exercise, weightController.text, repsController.text);
+          },
+          textColor: Theme.of(context).accentColor,
+          child: const Text('Edit Set'),
+        ),
+      ],
+    );
+  }
+  static void _showDialog(BuildContext context) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text(""),
+          content: new Text("Set has been modified successfully!"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
   void resetExercises(){
     exercises = new List<ListTile>();
   }
@@ -105,57 +203,8 @@ class TodoListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: exercises,
-
     );
+
+    
   }
 }
-
-/*Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        ListTile(
-          title: Text('Horse'),
-          subtitle: Text('A strong animal'),
-          trailing: Icon(Icons.keyboard_arrow_right),
-          onTap: () {
-            print('horse');
-          },
-          selected: true,
-        ),
-        ListTile(
-          title: Text('Cow'),
-          subtitle: Text('Provider of milk'),
-          trailing: Icon(Icons.keyboard_arrow_right),
-          onTap: () {
-            print('cow');
-          },
-        ),
-        ListTile(
-          title: Text('Camel'),
-          subtitle: Text('Comes with humps'),
-          trailing: Icon(Icons.keyboard_arrow_right),
-          onTap: () {
-            print('camel');
-          },
-          enabled: false,
-        ),
-        ListTile(
-          title: Text('Sheep'),
-          subtitle: Text('Provides wool'),
-          trailing: Icon(Icons.keyboard_arrow_right),
-          onTap: () {
-            print('sheep');
-          },
-        ),
-        ListTile(
-          title: Text('Goat'),
-          subtitle: Text('Some have horns'),
-          trailing: Icon(Icons.keyboard_arrow_right),
-          onTap: () {
-            print('goat');
-          },
-        ),
-      ],
-    );
-  }
-*/
