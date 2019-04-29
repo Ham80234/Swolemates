@@ -24,6 +24,9 @@ class ExpandableListView extends StatelessWidget {
   static List<Exercise> fullbodyExercises = ListHandler.getFBExercises();
   static List<Exercise> otherExercises = ListHandler.getOtherExercises();
   
+  static int newID = 2001;
+  static int newType = 1;
+
   static final List<String> groups = [
     "Chest",
     "Back",
@@ -61,6 +64,9 @@ class ExpandableListView extends StatelessWidget {
 
   TextEditingController weightController = new TextEditingController();
   TextEditingController repsController = new TextEditingController();
+  TextEditingController exerciseController = new TextEditingController();
+  TextEditingController groupController = new TextEditingController();
+  TextEditingController typeController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +90,19 @@ class ExpandableListView extends StatelessWidget {
                 .toList(),
           ));
 
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Exercises'),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.create),
+            tooltip:'Add new exercise',
+            onPressed: (){
+            showDialog(context: context,
+            builder: (BuildContext context) => _addNewExercise(context));
+            }
+          ),
+        ]
       ),
       body: ListView(
         padding: EdgeInsets.all(8.0),
@@ -167,6 +183,140 @@ Widget _buildAboutDialog(BuildContext context, Exercise exercise) {
         return AlertDialog(
           title: new Text(""),
           content: new Text("Set has been added successfully!"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  Widget _addNewExercise(BuildContext context) {
+    return new AlertDialog(
+      
+      title: Text('Add New Exercise'),
+      content: new Column(
+       mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Text("Please enter the exercise parameters"),
+          new Text(""),
+          new Text(""),
+          new Text("Exercise name:"),
+          new TextField(
+            controller: exerciseController,
+            maxLines: 1,
+            cursorColor: Colors.white,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: 'Example: Dumbbell high-low fly'
+            ),
+          ),
+          new Text(""),
+          new Text("Group name:"),
+          new TextField(
+            controller: groupController,
+            maxLines: 1,
+            cursorColor: Colors.white,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: 'Example: Chest'
+            ),
+          ),
+          new Text(""),
+          new Text("Exercise type:"),
+          new TextField(
+            controller: typeController,
+            maxLines: 1,
+            cursorColor: Colors.white,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: 'Compound or Accessory'
+            ),
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        new FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          textColor: Theme.of(context).accentColor,
+          child: const Text('Close'),
+        ),
+        new FlatButton(
+          onPressed: () {
+            //Navigator.of(context).pop();
+            _showNewExerciseDialog(context);
+            if(typeController.text == 'Compound'){
+              newType = 0;
+            }
+            else{
+              newType = 1;
+            }
+
+            Exercise temp = new Exercise(id: newID.toString(), name: exerciseController.text, type: newType, pref:0, suf:0);
+            switch(groupController.text){
+              case 'Chest': {
+                chestExercises.add(temp);
+                break;
+              }
+              case 'Back': {
+                backExercises.add(temp);
+                break;
+              }
+              case 'Shoulders': {
+                shoulderExercises.add(temp);
+                break;
+              }
+              case 'Biceps': {
+                bicepsExercises.add(temp);
+                break;
+              }
+              case 'Triceps': {
+                tricepsExercises.add(temp);
+                break;
+              }
+              case 'Cardio': {
+                cardioExercises.add(temp);
+                break;
+              }
+              case 'Forearms': {
+                forearmsExercises.add(temp);
+                break;
+              }
+              case 'Quads': {
+                quadExercises.add(temp);
+                break;
+              }
+              case 'Hamstrings': {
+                hamstringExercises.add(temp);
+                break;
+              }
+
+            }
+            newID++;
+          },
+          textColor: Theme.of(context).accentColor,
+          child: const Text('Add Exercise'),
+        ),
+      ],
+    );
+  }
+  void _showNewExerciseDialog(BuildContext context) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text(""),
+          content: new Text("Exercise has been added successfully!"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
