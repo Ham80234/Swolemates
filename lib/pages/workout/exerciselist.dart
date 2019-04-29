@@ -298,7 +298,10 @@ Widget _buildAboutDialog(BuildContext context, Exercise exercise) {
                 hamstringExercises.add(temp);
                 break;
               }
-
+              default: {
+                otherExercises.add(temp);
+                break;
+              }
             }
             newID++;
           },
