@@ -5,6 +5,7 @@ import 'package:flutter_todo/database/databasehandler.dart';
 import 'package:flutter_todo/database/listhandler.dart';
 import 'package:flutter_todo/models/Exercise.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/widgets/todo/todo_list_view.dart';
 
 class ExpandableListView extends StatelessWidget {
   static final List<String> _listViewData = [
@@ -69,6 +70,8 @@ class ExpandableListView extends StatelessWidget {
       otherExercises, //15
   ];
 
+  TextEditingController weightController = new TextEditingController();
+  TextEditingController repsController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +127,7 @@ Widget _buildAboutDialog(BuildContext context, Exercise exercise) {
         children: <Widget>[
           new Text("Weight:"),
           new TextField(
+            controller: weightController,
             maxLines: 1,
             cursorColor: Colors.white,
             decoration: InputDecoration(
@@ -135,6 +139,7 @@ Widget _buildAboutDialog(BuildContext context, Exercise exercise) {
           new Text(""),
           new Text("Reps:"),
           new TextField(
+            controller: repsController,
             maxLines: 1,
             cursorColor: Colors.white,
             decoration: InputDecoration(
@@ -156,6 +161,7 @@ Widget _buildAboutDialog(BuildContext context, Exercise exercise) {
           onPressed: () {
             //Navigator.of(context).pop();
             _showDialog(context);
+            TodoListView.addNewExercise(exercise, weightController.text, repsController.text);
           },
           textColor: Theme.of(context).accentColor,
           child: const Text('Add Set'),

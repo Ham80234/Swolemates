@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_todo/models/Exercise.dart';
 import 'package:flutter_todo/models/filter.dart';
 
 import 'package:scoped_model/scoped_model.dart';
@@ -79,53 +80,32 @@ class TodoListView extends StatelessWidget {
   //     },
   //   );
   // }
+
+  static List<ListTile> exercises = new List<ListTile>();
+  static void addNewExercise(Exercise exercise, String weight, String reps){
+    ListTile temp = new ListTile(
+      title: Text(exercise.name),
+      subtitle: Text(weight + ' lbs x ' + reps),
+      trailing: Icon(Icons.edit),
+      onTap: (){
+        print('edit options');
+      }
+    );
+    exercises.add(temp);
+  }
+
+  void resetExercises(){
+    exercises = new List<ListTile>();
+  }
+
+  static List<ListTile> getExercises(){
+    return exercises;
+  }
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: <Widget>[
-        ListTile(
-          title: Text('Horse'),
-          subtitle: Text('A strong animal'),
-          trailing: Icon(Icons.keyboard_arrow_right),
-          onTap: () {
-            print('horse');
-          },
-          selected: true,
-        ),
-        ListTile(
-          title: Text('Cow'),
-          subtitle: Text('Provider of milk'),
-          trailing: Icon(Icons.keyboard_arrow_right),
-          onTap: () {
-            print('cow');
-          },
-        ),
-        ListTile(
-          title: Text('Camel'),
-          subtitle: Text('Comes with humps'),
-          trailing: Icon(Icons.keyboard_arrow_right),
-          onTap: () {
-            print('camel');
-          },
-          enabled: false,
-        ),
-        ListTile(
-          title: Text('Sheep'),
-          subtitle: Text('Provides wool'),
-          trailing: Icon(Icons.keyboard_arrow_right),
-          onTap: () {
-            print('sheep');
-          },
-        ),
-        ListTile(
-          title: Text('Goat'),
-          subtitle: Text('Some have horns'),
-          trailing: Icon(Icons.keyboard_arrow_right),
-          onTap: () {
-            print('goat');
-          },
-        ),
-      ],
+      children: exercises,
+
     );
   }
 }
