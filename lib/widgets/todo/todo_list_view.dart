@@ -98,6 +98,21 @@ class TodoListView extends StatelessWidget {
     exercises.add(temp);
     count++;
   }
+  static void addNewEmptyExercise(Exercise exercise, String reps){
+    ListTile temp = new ListTile(
+      title: Text(exercise.name),
+      subtitle: Text('_____ lbs x ' + reps),
+      trailing: Icon(Icons.edit),
+      onTap: (){
+        print('edit options');
+        //  showDialog(
+        //    context: context,
+        //    builder: (BuildContext context) => _editExercise(context, exercise, weight, reps),);  
+      }
+    );
+    exercises.add(temp);
+    count++;
+  }
   static void deleteExercise(BuildContext context, Exercise exercise){
     for(int i=0; i<exercises.length; i++){
       ListTile temp = exercises.elementAt(i);

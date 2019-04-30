@@ -194,9 +194,7 @@ class _ImportPageState extends State<ImportPage> {
 
   Widget _buildPageContent(AppModel model) {
     return Scaffold(
-      appBar: _buildAppBar(model),
       // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: _buildFloatingActionButton(model),
       bottomNavigationBar: _buildBottomAppBar(model),
       body: ImportView(),
     );
