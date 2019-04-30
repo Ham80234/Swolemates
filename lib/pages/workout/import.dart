@@ -112,7 +112,7 @@ class _ImportPageState extends State<ImportPage> {
       ),
       onPressed: () {
         model.applyFilter(Filter.Workout);
-        Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+        Navigator.pushNamed(context, '/');
       },
     );
   }

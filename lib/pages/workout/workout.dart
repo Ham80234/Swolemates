@@ -23,6 +23,7 @@ class WorkoutPage extends StatefulWidget {
     return _WorkoutPageState();
   }
   
+  
 }
 
 class _WorkoutPageState extends State<WorkoutPage> {
@@ -37,6 +38,17 @@ class _WorkoutPageState extends State<WorkoutPage> {
     return AppBar(
       title: Text(Configure.AppName),
       actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.delete),
+          onPressed: () async {
+            bool confirm = await ConfirmDeleteDialog.show(context);
+
+            if (confirm == true) {
+              Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+
+            }
+          },
+        ),
         IconButton(
           icon: Icon(Icons.lock),
           onPressed: () async {
@@ -82,9 +94,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
       return FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          model.setCurrentTodo(null);
          // DBProvider.getDatabase();
-          Navigator.push(
+         Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ExpandableListView()),
             );
@@ -113,7 +124,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
         ),
       ),
       onPressed: () {
-        model.applyFilter(Filter.Workout);
+         model.applyFilter(Filter.Workout);
+       Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
       },
     );
   }

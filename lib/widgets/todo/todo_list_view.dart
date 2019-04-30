@@ -118,7 +118,14 @@ class TodoListView extends StatelessWidget {
       ListTile temp = exercises.elementAt(i);
 
     }
-
+  }
+  static void deleteAllExercises(){
+    print('Trying to delete');
+    // for(int i=0; i<exercises.length; i++){
+    //   exercises.removeAt(i);
+    // }
+    exercises = new List<ListTile>();
+    count = 0;
   }
   static TextEditingController weightController = new TextEditingController();
   static TextEditingController repsController = new TextEditingController();

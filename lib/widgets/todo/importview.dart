@@ -99,6 +99,7 @@ class ImportView extends StatelessWidget {
                         print("Navigate");  
                         for(int i=0; i<data.exercises.length; i++){
                           TodoListView.addNewEmptyExercise(data.exercises.elementAt(i).exercise, data.exercises.elementAt(i).rep.toString());
+
                         }
                         _showDialog(context);
                       }
@@ -135,6 +136,7 @@ class ImportView extends StatelessWidget {
               child: new Text("Close"),
               onPressed: () {
                 Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+                
               },
             ),
           ],
