@@ -19,6 +19,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final Map<String, dynamic> _formData = {
     'email': null,
     'password': null,
+    'name': null,
+    'weight': null,
+    'height': null
   };
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -56,6 +59,36 @@ class _RegisterPageState extends State<RegisterPage> {
       },
     );
   }
+  Widget _buildNameField() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Name'),
+      
+      onSaved: (value) {
+        _formData['name'] = value;
+      },
+    );
+  }
+
+Widget _buildWeightField() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Weight'),
+      
+      onSaved: (value) {
+        _formData['weight'] = value;
+      },
+    );
+  }
+
+Widget _buildHeightField() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Height'),
+      
+      onSaved: (value) {
+        _formData['height'] = value;
+      },
+    );
+  }
+
 
   Widget _buildConfirmPasswordField() {
     return TextFormField(
@@ -122,6 +155,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     _buildEmailField(),
                     _buildPasswordField(),
                     _buildConfirmPasswordField(),
+                    _buildNameField(),
+                    _buildWeightField(),
+                    _buildHeightField(),
+
                     SizedBox(
                       height: 20.0,
                     ),
