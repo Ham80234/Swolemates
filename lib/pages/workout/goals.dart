@@ -113,7 +113,7 @@ class _GoalsPageState extends State<GoalsPage> {
       ),
       onPressed: () {
         model.applyFilter(Filter.Workout);
-        Navigator.pushNamed(context, '/');
+        Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
       },
     );
   }

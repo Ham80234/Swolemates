@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/database/databasehandler.dart';
-import 'package:flutter_todo/widgets/todo/alternative_view.dart';
+import 'package:flutter_todo/widgets/todo/importview.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 
@@ -112,7 +112,7 @@ class _ImportPageState extends State<ImportPage> {
       ),
       onPressed: () {
         model.applyFilter(Filter.Workout);
-        Navigator.pushNamed(context, '/');
+        Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
       },
     );
   }
@@ -198,7 +198,7 @@ class _ImportPageState extends State<ImportPage> {
       // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: _buildFloatingActionButton(model),
       bottomNavigationBar: _buildBottomAppBar(model),
-      body: AlternativeView(),
+      body: ImportView(),
     );
   }
 
